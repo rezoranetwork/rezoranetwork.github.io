@@ -1,1 +1,168 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
 
+    <title>Rezora Network</title>
+
+    <style>
+        * {
+            box-sizing: border-box;
+        }
+
+        body {
+            margin: 0;
+            min-height: 100vh;
+            font-family: Arial, sans-serif;
+            background: #0B1020;
+            color: white;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            padding: 20px;
+        }
+
+        .container {
+            width: 100%;
+            max-width: 430px;
+            text-align: center;
+            background: #121A2E;
+            padding: 35px 25px;
+            border-radius: 20px;
+            box-shadow: 0 10px 35px rgba(0,0,0,0.35);
+        }
+
+        h1 {
+            margin: 0;
+            font-size: 30px;
+        }
+
+        .subtitle {
+            margin-top: 8px;
+            color: #8EA2C8;
+            font-size: 14px;
+            letter-spacing: 1px;
+        }
+
+        .join {
+            margin-top: 35px;
+            font-size: 22px;
+            font-weight: bold;
+        }
+
+        .code-box {
+            margin: 20px 0;
+            padding: 16px;
+            background: #0B1020;
+            border: 1px solid #263653;
+            border-radius: 12px;
+            font-size: 22px;
+            font-weight: bold;
+            letter-spacing: 2px;
+        }
+
+        button {
+            width: 100%;
+            border: none;
+            border-radius: 12px;
+            padding: 15px;
+            margin-top: 10px;
+            font-size: 16px;
+            font-weight: bold;
+            cursor: pointer;
+        }
+
+        .open-btn {
+            background: #ffffff;
+            color: #0B1020;
+        }
+
+        .copy-btn {
+            background: #263653;
+            color: white;
+        }
+
+        #message {
+            margin-top: 15px;
+            color: #8EA2C8;
+            font-size: 14px;
+        }
+    </style>
+</head>
+
+<body>
+
+<div class="container">
+
+    <h1>REZORA NETWORK</h1>
+
+    <div class="subtitle">
+        MINE • CONNECT • EARN
+    </div>
+
+    <div class="join">
+        Join Rezora Network
+    </div>
+
+    <div id="code" class="code-box">
+        Loading...
+    </div>
+
+    <button class="open-btn" onclick="openApp()">
+        Open in Rezora Network
+    </button>
+
+    <button class="copy-btn" onclick="copyCode()">
+        Copy Referral Code
+    </button>
+
+    <div id="message"></div>
+
+</div>
+
+<script>
+    const params = new URLSearchParams(window.location.search);
+    const referralCode = params.get("ref");
+
+    const codeElement = document.getElementById("code");
+
+    if (referralCode && /^[A-Za-z0-9]{4,20}$/.test(referralCode)) {
+        codeElement.textContent = referralCode;
+    } else {
+        codeElement.textContent = "NO CODE";
+    }
+
+    function openApp() {
+        if (!referralCode || !/^[A-Za-z0-9]{4,20}$/.test(referralCode)) {
+            document.getElementById("message").textContent =
+                "Invalid referral code.";
+            return;
+        }
+
+        const appLink =
+            "rezora://ref?ref=" +
+            encodeURIComponent(referralCode);
+
+        window.location.href = appLink;
+    }
+
+    function copyCode() {
+        if (!referralCode || !/^[A-Za-z0-9]{4,20}$/.test(referralCode)) {
+            return;
+        }
+
+        navigator.clipboard.writeText(referralCode)
+            .then(function() {
+                document.getElementById("message").textContent =
+                    "Referral code copied!";
+            })
+            .catch(function() {
+                document.getElementById("message").textContent =
+                    "Copy failed. Please copy it manually.";
+            });
+    }
+</script>
+
+</body>
+</html>
